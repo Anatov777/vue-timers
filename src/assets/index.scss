@@ -27,16 +27,12 @@ body {
 }
 
 .timers {
-  display: flex;
-  flex-wrap: wrap;
-//   justify-content: center;
-
-  gap: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 225px);
+  row-gap: 45px;
+  column-gap: 50px;
   width: 100%;
   max-width: 775px;
-  & > div {
-    //   justify-self: flex-start;
-  }
 }
 
 .add-timer {

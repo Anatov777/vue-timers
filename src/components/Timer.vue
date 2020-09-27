@@ -39,11 +39,11 @@ export default {
       if (this.timeUnits.length === 1) {
         seconds = Number(this.timeUnits[0]);
       }
-      if (this.timeUnits.length === 2) {
+      else if (this.timeUnits.length === 2) {
         minutes = Number(this.timeUnits[0]);
         seconds = minutes * 60 + Number(this.timeUnits[1]);
       }
-      if (this.timeUnits.length === 3) {
+      else if (this.timeUnits.length === 3) {
         minutes = Number(this.timeUnits[1]);
         hours = Number(this.timeUnits[0]);
         seconds = hours * 3600 + minutes * 60 + Number(this.timeUnits[2]);
