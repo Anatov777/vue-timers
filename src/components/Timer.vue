@@ -32,6 +32,7 @@ export default {
       if (this.time === "0") {
         return;
       }
+      let start = new Date;
       this.isRunning = true;
       this.time = String(this.time);
       this.timeUnits = this.time.split(":");
@@ -49,9 +50,9 @@ export default {
         seconds = hours * 3600 + minutes * 60 + Number(this.timeUnits[2]);
       }
       this.timer = setInterval(() => {
-        seconds--;
+        let current = seconds - Math.floor((new Date - start)/1000);
         seconds ? "" : this.reset();
-        this.time = this.timeFormat(seconds);
+        this.time = this.timeFormat(current);
         seconds ? "" : (this.time = "0");
       }, 1000);
     },
