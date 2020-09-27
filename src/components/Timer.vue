@@ -1,12 +1,18 @@
 <template>
-  <div class="timer">
-    <input
-      class="timer__input"
-      type="text"
-      v-model="time"
-      v-on:keyup="replaceUnits"
-    />
-    <button class="timer__start-btn" @click="startTimer">Start</button>
+  <div class="timer" v-bind:class="{ active: isRunning }">
+    <div class="timer__input-area">
+      <input
+        class="timer__input"
+        type="text"
+        v-model="time"
+        v-on:keyup="replaceUnits"
+      />
+    </div>
+    <div class="timer__btn-area">
+      <div class="timer__start-btn" @click="startTimer" v-if="!isRunning"></div>
+      <div class="timer__stop-btn" @click="stop" v-if="isRunning"></div>
+      <div class="timer__reset-btn" @click="reset"></div>
+    </div>
   </div>
 </template>
 
@@ -16,14 +22,18 @@ export default {
   data() {
     return {
       isRunning: false,
-      time: "",
+      time: "2:40",
       timer: null,
       timeUnits: [],
     };
   },
   methods: {
     startTimer() {
+      if (this.time === "0") {
+        return;
+      }
       this.isRunning = true;
+      this.time = String(this.time);
       this.timeUnits = this.time.split(":");
       let seconds, minutes, hours;
       if (this.timeUnits.length === 1) {
@@ -39,9 +49,10 @@ export default {
         seconds = hours * 3600 + minutes * 60 + Number(this.timeUnits[2]);
       }
       this.timer = setInterval(() => {
-        seconds ? "" : this.stop();
-        this.time = this.timeFormat(seconds);
         seconds--;
+        seconds ? "" : this.reset();
+        this.time = this.timeFormat(seconds);
+        seconds ? "" : (this.time = "0");
       }, 1000);
     },
     stop() {
@@ -51,9 +62,7 @@ export default {
     },
     reset() {
       this.stop();
-      this.time = 0;
-      this.secondes = 0;
-      this.minutes = 0;
+      this.time = "0";
     },
     setTime(payload) {
       this.time = payload.minutes * 60 + payload.secondes;
